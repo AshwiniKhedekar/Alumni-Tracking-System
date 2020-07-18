@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Try</title>
+  </head>
+    <body>
+      <input type="button" onclick="save()" value="Request sign in">
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+
+<input type="text" id="uname" value="" placeholder="Enter name ">
+<input type="text" id="msg" value="" placeholder="message">
+<input type="button" onclick="save()" value="Send">
+<input type="button" onclick="display()" value="display">
+
+
+
+<script src="/__/firebase/init.js"></script>
+<script>
+
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAl7M57kUhkIqtC6qQHoPTVoLoUVpzJFww",
+    authDomain: "alumni-1b987.firebaseapp.com",
+    databaseURL: "https://alumni-1b987.firebaseio.com",
+    projectId: "alumni-1b987",
+    storageBucket: "alumni-1b987.appspot.com",
+    messagingSenderId: "462415600832",
+    appId: "1:462415600832:web:1e59f6138796f05c91a125",
+    measurementId: "G-SC8PCL7EFJ"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  //write data
+ // var database = firebase.database();
+ var newID;
+ function create()
+ {
+  var group="grp2";
+  newID= firebase.database().ref("message/").push();
+  newID.child("grpName").set(group);
+ }
+    
+ var newID= firebase.database().ref("message/").push();
+  function save()
+  {
+    var d=new Date();  
+    var hrs=d.getHours();
+    var min=d.getMinutes();
+    //var group="grp2";
+    var time=hrs+":"+min;
+    var user=document.getElementById('uname').value;
+    var msg=document.getElementById('msg').value;
+    //newID.child("members").push().set(user);
+    //var newID= firebase.database().ref("message/").push();
+
+     newID.child("members").push().set(user);
+     //newID.child("grpName").set(group);
+      newID.child("chat").push().set({
+          user,msg,time
+        });
+  }
+
+  function display()
+  {
+    var ref=newID.child("chat");
+        ref.on('value',function (snapshot){
+        snapshot.forEach(function(childSnapshot){
+          var childKey=childSnapshot.val();
+          var msg1=childKey.msg;
+          var user1=childKey.user;
+          var time1=childKey.time;
+
+          document.write(msg1+" ",user1+" ",time1+"<br>");
+
+        })
+
+   });
+  }
+</script>
+    </body>
+  </html>

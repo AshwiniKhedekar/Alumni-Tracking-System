@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Search</title>
+	<style>
+	#display
+	{
+		font-size:20px;
+		color:navy;
+		width: 100;
+		height:100;
+		position: relative;
+		border: navy;
+	}
+	.profile
+	{
+	border-radius: 50%;
+	border-width: 1px;
+    height: 150px;
+    width: 150px;
+    background-size: cover;
+    background-position:left;
+    background-blend-mode: multiply;
+    vertical-align: left;
+    text-align:left;
+    color: transparent;
+    transition: all .3s ease;
+    text-decoration: none;
+	}
+	.cell
+	{
+    padding:2%;
+    width:70%;
+	}
+	button
+	{
+    background-color:navy;
+    border: none;
+    color:white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    border-radius: 100px;
+	}
+	.design
+	{
+	font-size: 20px;
+	color: navy;
+	}
+	#name_list
+	{
+	list-style-type: none; 
+	margin-top:3em;
+	}
+	.list
+	{
+		margin-right: 10px;
+		margin-top: 5em;
+	}
+
+	</style>
+</head>
+	<meta charset="UTF-8">
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAl7M57kUhkIqtC6qQHoPTVoLoUVpzJFww",
+    authDomain: "alumni-1b987.firebaseapp.com",
+    databaseURL: "https://alumni-1b987.firebaseio.com",
+    projectId: "alumni-1b987",
+    storageBucket: "alumni-1b987.appspot.com",
+    messagingSenderId: "462415600832",
+    appId: "1:462415600832:web:1e59f6138796f05c91a125",
+    measurementId: "G-SC8PCL7EFJ"
+  };
+  // Initialize Firebase
+
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  firebase.database().ref('Users/').set({
+		name:'hello',age:19
+	});
+
+  function readdata() {
+  	firebase.database().ref('/').once('value',function(snapshot)) {
+  		snapshot.forEach(function(childSnapshot))
+  		{
+  			var childkey = childSnapshot.key;
+  			var childData = childSnapshot.data();
+  			document.getElementById('right1').innerHTML=childData['name']+','+childData['age'];
+  		}
+  	}
+  }	
+</script>
+
+<body>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script>
+
+
+
+	<h1 align="center">Search Alumni</h1>
+	<hr>
+	<table width="100%">
+	<tr>
+	<td>		
+<form name="f1">
+<div id="left1" >
+<table width="50%">
+<tr class="design">
+		<td  class="cell" > Select College:(required)</td>
+		<td  class="cell">
+				<select name="college" required="">
+					<option value="n" disabled="true" selected="true">None selected</option>
+					<option value="c1">College 1</option>
+					<option value="c2">College 2</option>
+					<option value="c3">College 3</option>
+				</select>
+		</td>
+</tr>
+	
+<tr class="design">
+		<td class="cell">
+	Select year of passing:</td>
+<td class="cell">
+	<select id="year">
+	</select>
+</td>
+</tr>
+<tr class="design">
+<td class="cell">
+	Select branch:</td>
+<td  class="cell">
+	<select name="branch" >
+		<option value="n" disabled="true" selected="true">None selected</option>
+		<option value="comp">Computer</option>
+		<option value="IT">IT</option>
+		<option value="ENTC">ENTC</option>
+	</select>
+</td>
+</tr>
+	
+<tr>
+	<td  class="cell">
+	<input type="search" name="s1" placeholder="Enter alumni name"></td>
+	<td class="cell">
+	<button type="submit" name="s2" value="Search" onclick="readdata()">Search</button><br>
+</td>
+</tr>
+</table>
+</div>
+</form>
+</td >
+<td>
+<div>
+<table id="display" width="50%">
+	<tr>
+		<td> 
+			<ul style="list-style-type: none; padding-top: 1em;">
+				<li><img class="profile" src="profile1.jpg " alt="Profile"></li>
+				<li><img class="profile" src="profile2.jpg " alt="Profile"></li>
+			</ul>
+		</td>
+		<td style="text-align: start; vertical-align: top;">
+			<dl>
+			 <dd class="list">Name</dd>
+			 <dd>2021</dd>
+
+			 <dd class="list">Name</dd>
+			 <dd>2022</dd>
+			</dl>
+		</td>
+	</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+var start = 1990;
+var end = new Date().getFullYear();
+var options="";
+  options += "<option selected='true' disabled='true'>"+ "None selected" +"</option>";
+
+for(var year = start ; year <=end; year++){
+  options += "<option>"+ year +"</option>";
+}
+document.getElementById("year").innerHTML = options;
+//document.getElementById("left1").style.border="solid #000000";
+
+	// body...
+	
+
+
+</script>
+</body>
+</html>
